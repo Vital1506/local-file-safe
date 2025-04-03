@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,11 +7,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileItem, getUserFiles, getAllFiles, deleteFile } from '@/services/fileService';
 import { useAuth } from '@/context/AuthContext';
 import { 
-  FileText, 
-  FilePdf, 
-  FileImage, 
-  FileSpreadsheet, 
+  FileType, 
   File as FileIcon,
+  Image, 
+  FileSpreadsheet, 
+  FileText,
   Search,
   Download,
   Trash2,
@@ -26,8 +25,8 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 
 const getFileIcon = (fileType: string) => {
-  if (fileType.includes('pdf')) return <FilePdf className="h-10 w-10 text-red-500" />;
-  if (fileType.includes('image')) return <FileImage className="h-10 w-10 text-blue-500" />;
+  if (fileType.includes('pdf')) return <FileType className="h-10 w-10 text-red-500" />;
+  if (fileType.includes('image')) return <Image className="h-10 w-10 text-blue-500" />;
   if (fileType.includes('sheet') || fileType.includes('excel') || fileType.includes('csv')) 
     return <FileSpreadsheet className="h-10 w-10 text-green-500" />;
   if (fileType.includes('word') || fileType.includes('document')) 
@@ -88,10 +87,8 @@ const FileList = ({ showAll = false }) => {
   const handleDelete = async (fileId: string) => {
     try {
       await deleteFile(fileId, user?.id || '', user?.role === 'admin');
-      // Update the file list
       fetchFiles();
     } catch (error) {
-      // Error is handled in the fileService
       console.error('Error deleting file:', error);
     }
   };
