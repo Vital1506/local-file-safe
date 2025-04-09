@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,56 +6,72 @@ import { Badge } from '@/components/ui/badge';
 import { Users, User, Search, Shield, Clock, FileText, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
+// Define the user type to avoid TypeScript errors
+type UserStatus = 'active' | 'inactive';
+type UserRole = 'admin' | 'user';
+
+interface UserData {
+  id: string;
+  username: string;
+  email: string;
+  role: UserRole;
+  createdAt: Date;
+  lastLogin: Date;
+  totalFiles: number;
+  totalStorage: number;
+  status: UserStatus;
+}
+
 // Mock user data
-const MOCK_USERS = [
+const MOCK_USERS: UserData[] = [
   {
     id: '1',
     username: 'admin',
     email: 'admin@example.com',
-    role: 'admin' as const,
+    role: 'admin',
     createdAt: new Date('2023-01-10'),
     lastLogin: new Date('2023-05-25'),
     totalFiles: 12,
     totalStorage: 25600000, // 25.6 MB
-    status: 'active' as const,
+    status: 'active',
   },
   {
     id: '2',
     username: 'user',
     email: 'user@example.com',
-    role: 'user' as const,
+    role: 'user',
     createdAt: new Date('2023-02-15'),
     lastLogin: new Date('2023-05-26'),
     totalFiles: 8,
     totalStorage: 12800000, // 12.8 MB
-    status: 'active' as const,
+    status: 'active',
   },
   {
     id: '3',
     username: 'alice',
     email: 'alice@example.com',
-    role: 'user' as const,
+    role: 'user',
     createdAt: new Date('2023-03-20'),
     lastLogin: new Date('2023-05-20'),
     totalFiles: 5,
     totalStorage: 6400000, // 6.4 MB
-    status: 'inactive' as const,
+    status: 'inactive',
   },
   {
     id: '4',
     username: 'bob',
     email: 'bob@example.com',
-    role: 'user' as const,
+    role: 'user',
     createdAt: new Date('2023-04-05'),
     lastLogin: new Date('2023-05-18'),
     totalFiles: 3,
     totalStorage: 3200000, // 3.2 MB
-    status: 'active' as const,
+    status: 'active',
   },
 ];
 
 const UserList = () => {
-  const [users, setUsers] = useState(MOCK_USERS);
+  const [users, setUsers] = useState<UserData[]>(MOCK_USERS);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   
@@ -81,11 +96,13 @@ const UserList = () => {
     
     // Simulate API call
     setTimeout(() => {
-      setUsers(users.map(user => 
+      const updatedUsers = users.map(user => 
         user.id === userId 
-          ? { ...user, status: user.status === 'active' ? 'inactive' as const : 'active' as const } 
+          ? { ...user, status: user.status === 'active' ? 'inactive' : 'active' as UserStatus } 
           : user
-      ));
+      );
+      
+      setUsers(updatedUsers);
       
       const user = users.find(u => u.id === userId);
       const newStatus = user?.status === 'active' ? 'deactivated' : 'activated';
