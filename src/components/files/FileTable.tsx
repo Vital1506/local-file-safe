@@ -49,12 +49,12 @@ const FileTable = ({
   }
 
   return (
-    <Card>
+    <Card className="glass overflow-hidden border-white/30">
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b bg-muted/40">
+              <tr className="border-b bg-white/50">
                 <th className="text-left py-3 px-4">
                   <button
                     className="flex items-center font-medium text-sm"

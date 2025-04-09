@@ -13,7 +13,7 @@ const SidebarMobileToggle: React.FC = () => {
     <Button
       variant="ghost"
       size="icon"
-      className="fixed top-4 left-4 z-50"
+      className="fixed top-4 left-4 z-50 bg-white/80 shadow-md backdrop-blur-sm border border-border/50"
       onClick={toggleSidebar}
     >
       <Menu className="h-5 w-5" />

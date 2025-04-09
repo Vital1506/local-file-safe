@@ -42,7 +42,7 @@ const FileTableRow = ({ file, userId, isAdmin, onFileDeleted }: FileTableRowProp
   };
 
   return (
-    <tr key={file.id} className="border-b hover:bg-muted/30">
+    <tr key={file.id} className="border-b hover:bg-white/50 transition-colors">
       <td className="py-3 px-4">
         <div className="flex items-center">
           <FileIconComponent fileType={file.type} />
@@ -54,12 +54,12 @@ const FileTableRow = ({ file, userId, isAdmin, onFileDeleted }: FileTableRowProp
             {file.tags.length > 0 && (
               <div className="flex flex-wrap gap-1 mt-1">
                 {file.tags.slice(0, 2).map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
+                  <Badge key={tag} variant="outline" className="text-xs bg-white/50 border-white/20">
                     {tag}
                   </Badge>
                 ))}
                 {file.tags.length > 2 && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs bg-white/50 border-white/20">
                     +{file.tags.length - 2}
                   </Badge>
                 )}
@@ -80,29 +80,30 @@ const FileTableRow = ({ file, userId, isAdmin, onFileDeleted }: FileTableRowProp
           className="h-6"
         >
           {file.status === 'encrypted' && (
-            <div className="h-2 w-2 rounded-full bg-green-500 mr-1 animate-pulse" />
+            <div className="h-2 w-2 rounded-full bg-green-500 mr-1 animate-pulse-secure" />
           )}
           {file.status.charAt(0).toUpperCase() + file.status.slice(1)}
         </Badge>
       </td>
       <td className="py-3 px-4 text-right space-x-1">
-        <Button variant="ghost" size="icon" title="Download">
+        <Button variant="ghost" size="icon" title="Download" className="hover:bg-white/50">
           <Download className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="icon" 
           title={file.isStarred ? "Unstar" : "Star"}
+          className="hover:bg-white/50"
         >
           <Star className={`h-4 w-4 ${file.isStarred ? 'fill-yellow-400 text-yellow-400' : ''}`} />
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="ghost" size="icon" title="Delete">
+            <Button variant="ghost" size="icon" title="Delete" className="hover:bg-white/50">
               <Trash2 className="h-4 w-4 text-destructive" />
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent className="glass">
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
